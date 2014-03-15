@@ -104,6 +104,9 @@ public class Client{
                 String[] temp = command[1].split(";");
                 String temp2 = "";
                 for (String x: temp){
+                    if(x.equals("")){
+                        continue;
+                    }
                     temp2 += x + "\n";
                 }
                 JOptionPane.showMessageDialog(msgFrame.panel, "The message failed to sent to the following offline users:\n" + temp2, "Message Sent", JOptionPane.ERROR_MESSAGE);
@@ -115,7 +118,7 @@ public class Client{
                 for(String x: temp){
                     temp2 += x + "; ";
                 }
-                frame.tab.cp.addText(command[1] + "'s message:\n" + temp2 + ":\n" + command[3]);
+                frame.tab.cp.addText(command[1] + "'s message\n" + temp2 + "\n" + command[3]);
             }
         }
     }
