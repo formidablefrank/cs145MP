@@ -109,6 +109,14 @@ public class Client{
                 JOptionPane.showMessageDialog(msgFrame.panel, "The message failed to sent to the following offline users:\n" + temp2, "Message Sent", JOptionPane.ERROR_MESSAGE);
                 break;
             }
+            case "SEND":{
+                String[] temp = command[2].split(";");
+                String temp2 = "to ";
+                for(String x: temp){
+                    temp2 += x + "; ";
+                }
+                frame.tab.cp.addText(command[1] + "'s message:\n" + temp2 + ":\n" + command[3]);
+            }
         }
     }
     
@@ -369,7 +377,7 @@ public class Client{
                         }
                         else{
                             try{
-                                clientOutput.writeObject("SEND!@#" + username + "!@#" + txtRep.getText() + "!@#MSG!@#" + txt.getText());
+                                clientOutput.writeObject("SEND!@#" + username + "!@#" + txtRep.getText() + "!@#" + txt.getText());
                                 clientOutput.flush();
                             }
                             catch(IOException ex){

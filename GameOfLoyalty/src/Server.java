@@ -145,7 +145,7 @@ public class Server{
                     //send message to online receipients
                     for(Connection conn: connections){
                         if(trueRepList.contains(conn.username)){
-                            conn.serverOutput.writeObject("SEND!@#" + command[1] + "!@#" + trueRepList + "!@#MSG!@#" + command[3]);
+                            conn.serverOutput.writeObject("SEND!@#" + command[1] + "!@#" + trueRepList + "!@#" + command[3]);
                             conn.serverOutput.flush();
                         }
                     }
