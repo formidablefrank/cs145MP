@@ -101,15 +101,20 @@ public class Client{
                 break;
             }
             case "FAILED":{
-                String[] temp = command[1].split(";");
-                String temp2 = "";
-                for (String x: temp){
-                    if(x.equals("")){
-                        continue;
+                try{
+                    String[] temp = command[1].split(";");
+                    String temp2 = "";
+                    for (String x: temp){
+                        if(x.equals("")){
+                            continue;
+                        }
+                        temp2 += x + "\n";
                     }
-                    temp2 += x + "\n";
+                    JOptionPane.showMessageDialog(msgFrame.panel, "The message failed to sent to the following offline users:\n" + temp2, "Message Sent", JOptionPane.ERROR_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(msgFrame.panel, "The message failed to sent to the following offline users:\n" + temp2, "Message Sent", JOptionPane.ERROR_MESSAGE);
+                catch (ArrayIndexOutOfBoundsException e){
+                    
+                }
                 break;
             }
             case "SEND":{
