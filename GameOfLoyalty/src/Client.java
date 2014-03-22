@@ -125,6 +125,15 @@ public class Client{
                 }
                 frame.tab.cp.addText(command[1] + "'s message\n" + temp2 + "\n" + command[3]);
             }
+            case "GAMEROOMS":{
+                gamelist.clear();
+                for(int i=1; i<command.length; i++){
+                    System.out.println("asfd");
+                    String[] temp = command[i].split(",");
+                    gamelist.add(new GameRoomGUI(temp[0], Integer.parseInt(temp[1])));
+                }
+                break;
+            }
         }
     }
     
@@ -188,7 +197,7 @@ public class Client{
                         }
                     }
                     else if(e.getSource() == menuItems[4]){
-                        JOptionPane.showMessageDialog(frame,"TsikaNet v1.0\nFrank Rayo\nCS 145 WFWX\nAll rights reserved.\nabout.me/bosz.frank07","About TsikaNet",JOptionPane.INFORMATION_MESSAGE,new Frame.icon(icon));
+                        JOptionPane.showMessageDialog(frame,"TsikaNet v1.0\nEsguerra, Rayo, Shen\nCS 145 WFWX\nAll rights reserved.","About TsikaNet",JOptionPane.INFORMATION_MESSAGE,new Frame.icon(icon));
                     }
                     else if(e.getSource() == menuItems[2]){
                         JOptionPane.showMessageDialog(frame,"Username: " + username + "\nLocal Address: " + client.getLocalAddress() + ":" + client.getLocalPort() + "\nServer Address: " + client.getInetAddress().toString() + ":" + client.getPort(),"Connection Properties",JOptionPane.INFORMATION_MESSAGE,new Frame.icon(icon));
@@ -203,7 +212,7 @@ public class Client{
             }
         }
         
-        class TabPane extends JTabbedPane{
+        public class TabPane extends JTabbedPane{
             private ChatRoomPanel cp = new ChatRoomPanel();
             private GameRoomPanel gp = new GameRoomPanel();
             
@@ -310,8 +319,31 @@ public class Client{
                     }
                 }
             }
-            class GameRoomPanel extends JPanel{
+            public class GameRoomPanel extends JPanel{
+                /*public GameRoomPanel(){
+                    for(GameRoomGUI g: gamelist){
+                        this.add(g);
+                    }
+                }*/
                 
+                @Override
+                public void paintComponent(Graphics gr){
+                    String str="";
+                    try{
+                        clientOutput.writeObject("GAMEROOMS!@#" + username);
+                        clientOutput.flush();
+                        
+                    }
+                    catch(Exception ex){
+                        ex.printStackTrace();
+                        System.out.println("Error");
+                    }
+                    
+                    System.out.println(gamelist.size());
+                    for(GameRoomGUI g: gamelist){
+                        this.add(g);
+                    }
+                }
             }
         }
         
@@ -332,6 +364,28 @@ public class Client{
             public void paintIcon(Component c, Graphics g, int x, int y){
                 g.drawImage(iconset, x, y, rootPane);
             }
+        }
+    }
+    private LinkedList<GameRoomGUI> gamelist = new LinkedList<>();
+                
+    public class GameRoomGUI extends JPanel{
+        private JLabel name;
+        private JLabel slot;
+        private JButton status;
+
+        public GameRoomGUI(String n, int s){
+            name = new JLabel(n);
+            slot = new JLabel(Integer.toString(s)+"/2");
+            if(s<2){
+                status = new JButton("enter");
+            }
+            else{
+                status = new JButton("closed");
+                status.setEnabled(false);
+            }
+            this.add(name);
+            this.add(slot);
+            this.add(status);
         }
     }
     

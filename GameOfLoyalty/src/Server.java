@@ -8,6 +8,8 @@ public class Server{
     private final LinkedList<Connection> connections;
     private final int port, limit;
     private String message;
+    private LinkedList<GameRoom> gameRooms;
+    private int gameRoomSize;
     
     protected class Connection implements Runnable{
         private final Socket connection;        
@@ -151,6 +153,20 @@ public class Server{
                     }
                     break;
                 }
+                case "GAMEROOMS":{
+                    String list = "GAMEROOMS";
+                    for(GameRoom g: gameRooms){
+                        list = list.concat("!@#" + g.toString());
+                    }
+                    for (Connection conn: connections){
+                        if (conn.username.equals(command[1])){
+                            serverOutput.writeObject(list);
+                            serverOutput.flush();
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
@@ -158,10 +174,16 @@ public class Server{
     public Server(int port, int limit){
         this.port = port;
         this.limit = limit;
+        this.gameRoomSize = 6;
         connections = new LinkedList();
     }
     
     public void runServer(){
+        gameRooms = new LinkedList<>();
+        for(int i=0; i<gameRoomSize; i++){
+            GameRoom game = new GameRoom("Room " + i,0);
+            gameRooms.add(game);
+        }
         try{
             serverSocket = new ServerSocket(this.port, this.limit);
             System.out.println("Waiting for connection:");
@@ -185,6 +207,22 @@ public class Server{
         }
         catch(IOException e){
             e.printStackTrace();
+        }
+    }
+    
+    protected class GameRoom{
+        String name;
+        int slot;
+        int status;
+        
+        public GameRoom(String n, int s){
+            this.name = n;
+            this.slot = s;
+        }
+        
+        @Override
+        public String toString(){
+            return this.name + "," + this.slot;
         }
     }
 }
