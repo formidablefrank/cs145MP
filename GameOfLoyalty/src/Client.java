@@ -214,7 +214,7 @@ public class Client{
         
         public class TabPane extends JTabbedPane{
             private ChatRoomPanel cp = new ChatRoomPanel();
-            private GameRoomPanel gp = new GameRoomPanel();
+            private PlayPanel pp = new PlayPanel();
             
             public TabPane(){
                 this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -222,7 +222,48 @@ public class Client{
                 this.setForeground(Color.BLUE.brighter());
                 this.setBackground(Color.black);
                 this.add("ChatRoom", cp);
-                this.add("GameRooms", gp);
+                this.add("Play Game",pp);
+            }
+            
+            class PlayPanel extends JPanel{
+                private JLabel lbl1 = new JLabel("Play game with AI");
+                private JButton btn1 = new JButton("Play!");
+                private JLabel lbl2 = new JLabel("Play game with an online user");
+                private JTextField txt = new JTextField(15);
+                private JButton btn2 = new JButton("Connect!");
+                private PlayListener pl = new PlayListener();
+                
+                public PlayPanel(){
+                    this.add(lbl1);
+                    this.add(btn1);
+                    this.add(lbl2);
+                    this.add(txt);
+                    this.add(btn2);
+                    btn1.addActionListener(pl);
+                    btn2.addActionListener(pl);
+                }
+                
+                @Override
+                public void paintComponent(Graphics g){
+                    this.add(lbl1);
+                    this.add(btn1);
+                    this.add(lbl2);
+                    this.add(txt);
+                    this.add(btn2);
+                }
+                
+                class PlayListener implements ActionListener{
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        if (e.getSource() == btn1){
+                            SplashScreen gui = new SplashScreen();
+                            gui.go();
+                        }
+                        else if (e.getSource() == btn2){
+                            
+                        }
+                    }
+                }
             }
             
             class ChatRoomPanel extends JPanel{
@@ -316,32 +357,6 @@ public class Client{
                                 }
                             }
                         }
-                    }
-                }
-            }
-            public class GameRoomPanel extends JPanel{
-                /*public GameRoomPanel(){
-                    for(GameRoomGUI g: gamelist){
-                        this.add(g);
-                    }
-                }*/
-                
-                @Override
-                public void paintComponent(Graphics gr){
-                    String str="";
-                    try{
-                        clientOutput.writeObject("GAMEROOMS!@#" + username);
-                        clientOutput.flush();
-                        
-                    }
-                    catch(Exception ex){
-                        ex.printStackTrace();
-                        System.out.println("Error");
-                    }
-                    
-                    System.out.println(gamelist.size());
-                    for(GameRoomGUI g: gamelist){
-                        this.add(g);
                     }
                 }
             }

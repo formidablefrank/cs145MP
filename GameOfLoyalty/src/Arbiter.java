@@ -19,9 +19,6 @@ public abstract class Arbiter implements java.io.Serializable
                 board[i1][j1] = new Piece(10*i1+j1,"",-1);
                 Board.swap(i0, j0, i1, j1);
                 BoardGUI.status.setText("You win the game in " + (Board.moves+1) + " moves!");
-                if(BoardGUI.aiDiff<4)    BoardGUI.EgamesWon++;
-                else if(BoardGUI.aiDiff>7)    BoardGUI.DgamesWon++;
-                else BoardGUI.MgamesWon++;
             }
             else if(board[i0][j0].getOwner()==1)
             {
@@ -44,9 +41,7 @@ public abstract class Arbiter implements java.io.Serializable
                 board[i0][j0].setPosition(-1);
                 isWin = true;
                 BoardGUI.status.setText("You win the game in " + (Board.moves+1) + " moves!");
-                if(BoardGUI.aiDiff<4)    BoardGUI.EgamesWon++;
-                else if(BoardGUI.aiDiff>7)    BoardGUI.DgamesWon++;
-                else BoardGUI.MgamesWon++;
+                
             }
             else if(board[i1][j1].getOwner()==0)
             {

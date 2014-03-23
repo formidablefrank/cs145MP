@@ -9,16 +9,7 @@ public class BoardGUI implements Serializable
     Frame frame = new Frame();
     static Board gui = new Board();
     static Settings set = new Settings();
-    static Stats st = new Stats();
-    static SaveLoad sl = new SaveLoad();
     public static int aiDiff = 5;
-    public static int Egames;
-    public static int EgamesWon;
-    public static int Mgames;
-    public static int MgamesWon;
-    public static int Dgames;
-    public static int DgamesWon;
-    
     public void go()
     {
         frame.setVisible(true);
@@ -35,7 +26,7 @@ public class BoardGUI implements Serializable
             super("Game of Loyalty");
             this.setSize(600,600);
             this.setLocationRelativeTo(null);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             this.setResizable(false);
             this.setIconImage(icon);
             this.setJMenuBar(menu);
@@ -95,9 +86,6 @@ public class BoardGUI implements Serializable
                     }
                     else if(e.getSource() == menuitems[0])
                     {
-                        if(aiDiff<4)    Egames++;
-                        else if(aiDiff>7)    Dgames++;
-                        else Mgames++;
                         gui.removeAll();
                         gui.moves = 0;
                         Arbiter.isWin = false;
@@ -112,8 +100,8 @@ public class BoardGUI implements Serializable
         
         class TabPane extends JTabbedPane
         {
-            private String strpanels[] = {"Board","Settings","Save or Load","Statistics","Help"};
-            private JPanel panels[] = {gui,set,sl,st,new Help()};
+            private String strpanels[] = {"Board","Settings","Help","Statistics","Help"};
+            private JPanel panels[] = {gui,set,new Help()};
             
             public TabPane()
             {
