@@ -15,3 +15,7 @@ S - LIST!@#<username>\n<username>\n...
 Send message:
 C - SEND!@#<username>!@#<username>;<username>;...;<username>!@#<message>
 S - FAILED!@#<username>;<username>;...;<username>
+
+Request game:
+C - GAME!@#<f-username>!@#<t-username>
+S - GAME!@#<f-username>!@#<t-username>

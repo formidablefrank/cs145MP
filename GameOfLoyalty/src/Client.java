@@ -124,6 +124,14 @@ public class Client{
                     temp2 += x + "; ";
                 }
                 frame.tab.cp.addText(command[1] + "'s message\n" + temp2 + "\n" + command[3]);
+                break;
+            }
+            case "GAME":{
+                int res = JOptionPane.showConfirmDialog(frame, "User " + command[1] + " is requesting to play with you.\n Would you like to confirm?", "Game request", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (res == JOptionPane.OK_OPTION){
+                    
+                }
+                break;
             }
         }
     }
@@ -250,8 +258,16 @@ public class Client{
                             SplashScreen gui = new SplashScreen();
                             gui.go();
                         }
-                        else if (e.getSource() == btn2){
-                            
+                        else if (e.getSource() == btn2 && !txt.getText().equals("")){
+                            try{
+                                clientOutput.writeObject("GAME!@#" + username + "!@#" + txt.getText());
+                                clientOutput.flush();
+                                txt.setText("");
+                            }
+                            catch(Exception ex){
+                                JOptionPane.showMessageDialog(frame,"Error requesting connection. Please try again.","Connection Lost",JOptionPane.ERROR_MESSAGE);
+                                System.out.println("Error sending status");
+                            }
                         }
                     }
                 }

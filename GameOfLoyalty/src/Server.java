@@ -151,6 +151,17 @@ public class Server{
                     }
                     break;
                 }
+                case "GAME":{
+                    for (Connection conn: connections){
+                        if (conn.username.equals(command[2])){
+                            System.out.println("Sent to " + command[2]);
+                            conn.serverOutput.writeObject(message);
+                            conn.serverOutput.flush();
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
