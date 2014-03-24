@@ -26,6 +26,7 @@ public class BoardGUI implements Serializable
             super("Game of Loyalty");
             this.setSize(600,600);
             this.setLocationRelativeTo(null);
+            this.setAlwaysOnTop(true);
             this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             this.setResizable(false);
             this.setIconImage(icon);

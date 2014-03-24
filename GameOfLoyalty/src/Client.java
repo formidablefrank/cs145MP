@@ -125,15 +125,6 @@ public class Client{
                 }
                 frame.tab.cp.addText(command[1] + "'s message\n" + temp2 + "\n" + command[3]);
             }
-            case "GAMEROOMS":{
-                gamelist.clear();
-                for(int i=1; i<command.length; i++){
-                    System.out.println("asfd");
-                    String[] temp = command[i].split(",");
-                    gamelist.add(new GameRoomGUI(temp[0], Integer.parseInt(temp[1])));
-                }
-                break;
-            }
         }
     }
     
@@ -379,28 +370,6 @@ public class Client{
             public void paintIcon(Component c, Graphics g, int x, int y){
                 g.drawImage(iconset, x, y, rootPane);
             }
-        }
-    }
-    private LinkedList<GameRoomGUI> gamelist = new LinkedList<>();
-                
-    public class GameRoomGUI extends JPanel{
-        private JLabel name;
-        private JLabel slot;
-        private JButton status;
-
-        public GameRoomGUI(String n, int s){
-            name = new JLabel(n);
-            slot = new JLabel(Integer.toString(s)+"/2");
-            if(s<2){
-                status = new JButton("enter");
-            }
-            else{
-                status = new JButton("closed");
-                status.setEnabled(false);
-            }
-            this.add(name);
-            this.add(slot);
-            this.add(status);
         }
     }
     

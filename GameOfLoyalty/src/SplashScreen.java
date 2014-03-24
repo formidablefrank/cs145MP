@@ -6,7 +6,6 @@ public class SplashScreen implements java.io.Serializable
     private Frame frame = new Frame();
     private Panel panel = new Panel();
     BoardGUI gui1 = new BoardGUI();
-    
     public void go()
     {
         frame.setVisible(true);
