@@ -10,8 +10,11 @@ public class BoardGUI implements Serializable
     static Board gui = new Board();
     static Settings set = new Settings();
     public static int aiDiff = 5;
-    public void go()
+    private JButton btn;
+    
+    public void go(JButton btn)
     {
+        this.btn = btn;
         frame.setVisible(true);
     }
     
@@ -32,9 +35,22 @@ public class BoardGUI implements Serializable
             this.setIconImage(icon);
             this.setJMenuBar(menu);
             this.add(tab,BorderLayout.CENTER);
-            this.add(status,BorderLayout.SOUTH);           
+            this.add(status,BorderLayout.SOUTH);
+            this.addWindowListener(new CloseListener());
         }
         
+        class CloseListener extends WindowAdapter{
+            @Override
+            public void windowClosing(WindowEvent e){
+                if (JOptionPane.showConfirmDialog(frame, 
+                    "Are you sure to close this window?", "Really Closing?", 
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) 
+                    == JOptionPane.YES_OPTION){
+                        btn.setEnabled(true);
+                }
+            }
+        }
         
         class Menu extends JMenuBar
         {

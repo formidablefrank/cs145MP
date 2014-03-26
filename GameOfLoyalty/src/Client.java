@@ -14,6 +14,7 @@ public class Client{
     private String message, username;
     private Frame frame;
     private MessageFrame msgFrame;
+    private JButton btn = new JButton("Start");
     
     public Client(String host, int port){
         this.host = host;
@@ -255,8 +256,9 @@ public class Client{
                     @Override
                     public void actionPerformed(ActionEvent e){
                         if (e.getSource() == btn1){
+                            btn1.setEnabled(false);
                             SplashScreen gui = new SplashScreen();
-                            gui.go();
+                            gui.go(btn1);
                         }
                         else if (e.getSource() == btn2 && !txt.getText().equals("")){
                             try{
