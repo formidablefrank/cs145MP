@@ -111,7 +111,7 @@ public class Client{
                         }
                         temp2 += x + "\n";
                     }
-                    JOptionPane.showMessageDialog(msgFrame.panel, "The message failed to sent to the following offline users:\n" + temp2, "Message Sent", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "The message failed to sent to the following offline users:\n" + temp2, "Message Sent", JOptionPane.ERROR_MESSAGE);
                 }
                 catch (ArrayIndexOutOfBoundsException e){
                     

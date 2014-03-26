@@ -121,25 +121,29 @@ public class Server{
                     break;
                 }
                 case "SEND":{
-                    String dummyRepList = command[2];
                     String trueRepList = "";
+                    LinkedList<String> list = new LinkedList<>(Arrays.asList(command[2].split(";")));
                     //determine online receipients
                     for (Connection conn: connections){
-                        if (dummyRepList.contains(conn.username)){
-                            dummyRepList = dummyRepList.replace(conn.username, "");
+                        if (list.contains(conn.username)){
+                            list.remove(conn.username);
                             trueRepList += conn.username + ";";
                         }
                     }
                     //offline receipients
-                    System.out.println("DummyList: " + dummyRepList);
+                    String dummyRepList = "";
+                    for (String s: list){
+                        dummyRepList += s + ";";
+                    }
                     //online receipients
-                    System.out.println("TrueList: " + trueRepList);
                     //send failed receipients to client
-                    for (Connection conn: connections){
-                        if (conn.username.equals(command[1])){
-                            serverOutput.writeObject("FAILED!@#" + dummyRepList);
-                            serverOutput.flush();
-                            break;
+                    if(!dummyRepList.isEmpty()){
+                        for (Connection conn: connections){
+                            if (conn.username.equals(command[1])){
+                                serverOutput.writeObject("FAILED!@#" + dummyRepList);
+                                serverOutput.flush();
+                                break;
+                            }
                         }
                     }
                     //send message to online receipients
