@@ -3,7 +3,7 @@ C - <username>
 S - USER!@#<username>!@#is up
 
 Log-out:
-C - TERMINATE!@#<username>
+C/S - TERMINATE!@#<username>
 
 Update status:
 C/S - STATUS!@#<username>!@#<message>
