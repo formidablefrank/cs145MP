@@ -148,6 +148,15 @@ public class Client{
                 JOptionPane.showMessageDialog(frame, "Sending game request to " + command[2] + " failed.\n Try again later.", "Failed", JOptionPane.ERROR_MESSAGE);
                 break;
             }
+            case "START":{
+                if(username.equals(command[1])){
+                    
+                }
+                else if (username.equals(command[2])){
+                    
+                }
+                break;
+            }
         }
     }
     

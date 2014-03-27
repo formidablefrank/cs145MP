@@ -183,6 +183,12 @@ public class Server{
                     break;
                 }
                 case "START":{
+                    for (Connection conn: connections){
+                        if (conn.username.equals(command[1]) || conn.username.equals(command[2])){
+                            conn.serverOutput.writeObject(message);
+                            conn.serverOutput.flush();
+                        }
+                    }
                     break;
                 }
             }

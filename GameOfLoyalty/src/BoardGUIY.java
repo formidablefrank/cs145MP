@@ -7,7 +7,7 @@ public class BoardGUIY implements Serializable
 {
     public static JLabel status = new JLabel("Let's Play! Click the board to start playing.",SwingConstants.RIGHT);
     Frame frame = new Frame();
-    static Board gui = new Board();
+    static BoardY guiY = new BoardY();
     static Settings set = new Settings();
     public static int aiDiff = 5;
     private JButton btn;
@@ -103,13 +103,13 @@ public class BoardGUIY implements Serializable
                     }
                     else if(e.getSource() == menuitems[0])
                     {
-                        gui.removeAll();
-                        gui.moves = 0;
+                        guiY.removeAll();
+                        guiY.moves = 0;
                         Arbiter.isWin = false;
-                        gui.initialize();
-                        gui.revalidate();
-                        gui.repaint();
-                        tab.setSelectedComponent(gui);
+                        guiY.initialize();
+                        guiY.revalidate();
+                        guiY.repaint();
+                        tab.setSelectedComponent(guiY);
                     }
                 }
             }
@@ -118,7 +118,7 @@ public class BoardGUIY implements Serializable
         class TabPane extends JTabbedPane
         {
             private String strpanels[] = {"Board","Settings","Help","Statistics","Help"};
-            private JPanel panels[] = {gui,set,new Help()};
+            private JPanel panels[] = {guiY,set,new Help()};
             
             public TabPane()
             {
