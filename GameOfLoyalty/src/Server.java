@@ -182,6 +182,9 @@ public class Server{
                     }
                     break;
                 }
+                case "START":{
+                    break;
+                }
             }
         }
     }

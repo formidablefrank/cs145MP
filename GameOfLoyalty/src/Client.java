@@ -130,16 +130,22 @@ public class Client{
             case "GAME":{
                 int res = JOptionPane.showConfirmDialog(frame, "User " + command[1] + " is requesting to play with you.\n Would you like to confirm?", "Game request", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (res == JOptionPane.OK_OPTION){
-                    
+                    try{
+                        clientOutput.writeObject("START!@#" + command[1] + "!@#" + command[2]);
+                        clientOutput.flush();
+                    }
+                    catch(IOException e){
+                        e.printStackTrace();
+                    }
                 }
                 break;
             }
             case "WAIT":{
-                frame.status.setText("Please wait for " + command[1] + " to confirm...");
+                frame.status.setText("Please wait for " + command[2] + " to confirm...");
                 break;
             }
             case "NOGAME":{
-                JOptionPane.showMessageDialog(frame, "Sending game request failed.\n Try again later.", "Failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Sending game request to " + command[2] + " failed.\n Try again later.", "Failed", JOptionPane.ERROR_MESSAGE);
                 break;
             }
         }
