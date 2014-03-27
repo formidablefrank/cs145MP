@@ -156,11 +156,27 @@ public class Server{
                     break;
                 }
                 case "GAME":{
+                    boolean sent = false;
                     for (Connection conn: connections){
                         if (conn.username.equals(command[2])){
                             System.out.println("Sent to " + command[2]);
+                            sent = true;
                             conn.serverOutput.writeObject(message);
                             conn.serverOutput.flush();
+                            break;
+                        }
+                    }
+                    //if sent or failed, notify client
+                    for (Connection conn: connections){
+                        if (conn.username.equals(command[1])){
+                            if(sent){
+                                conn.serverOutput.writeObject("WAIT!@#"+command[1]+"!@#"+command[2]);
+                                conn.serverOutput.flush();
+                            }
+                            else{
+                                conn.serverOutput.writeObject("NOGAME!@#"+command[1]+"!@#"+command[2]);
+                                conn.serverOutput.flush();
+                            }
                             break;
                         }
                     }
@@ -200,22 +216,6 @@ public class Server{
         }
         catch(IOException e){
             e.printStackTrace();
-        }
-    }
-    
-    protected class GameRoom{
-        String name;
-        int slot;
-        int status;
-        
-        public GameRoom(String n, int s){
-            this.name = n;
-            this.slot = s;
-        }
-        
-        @Override
-        public String toString(){
-            return this.name + "," + this.slot;
         }
     }
 }

@@ -134,6 +134,14 @@ public class Client{
                 }
                 break;
             }
+            case "WAIT":{
+                frame.status.setText("Please wait for " + command[1] + " to confirm...");
+                break;
+            }
+            case "NOGAME":{
+                JOptionPane.showMessageDialog(frame, "Sending game request failed.\n Try again later.", "Failed", JOptionPane.ERROR_MESSAGE);
+                break;
+            }
         }
     }
     
