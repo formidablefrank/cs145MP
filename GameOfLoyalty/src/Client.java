@@ -14,7 +14,8 @@ public class Client{
     private String message, username;
     private Frame frame;
     private MessageFrame msgFrame;
-    private JButton btn = new JButton("Start");
+    private SplashScreenX splX;
+    private SplashScreenY splY;
     
     public Client(String host, int port){
         this.host = host;
@@ -127,7 +128,7 @@ public class Client{
                 frame.tab.cp.addText(command[1] + "'s message\n" + temp2 + "\n" + command[3]);
                 break;
             }
-            case "GAME":{
+            case "GAMEREQ":{
                 int res = JOptionPane.showConfirmDialog(frame, "User " + command[1] + " is requesting to play with you.\n Would you like to confirm?", "Game request", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (res == JOptionPane.OK_OPTION){
                     try{
@@ -150,10 +151,12 @@ public class Client{
             }
             case "START":{
                 if(username.equals(command[1])){
-                    
+                    splX = new SplashScreenX();
+                    splX.go(frame.tab.pp.btn2);
                 }
                 else if (username.equals(command[2])){
-                    
+                    splY = new SplashScreenY();
+                    splY.go(frame.tab.pp.btn2);
                 }
                 break;
             }
@@ -285,7 +288,7 @@ public class Client{
                         }
                         else if (e.getSource() == btn2 && !txt.getText().equals("")){
                             try{
-                                clientOutput.writeObject("GAME!@#" + username + "!@#" + txt.getText());
+                                clientOutput.writeObject("GAMEREQ!@#" + username + "!@#" + txt.getText());
                                 clientOutput.flush();
                                 txt.setText("");
                             }

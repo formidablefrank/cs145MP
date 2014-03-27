@@ -17,6 +17,9 @@ C - SEND!@#<username>!@#<username>;<username>;...;<username>!@#<message>
 S - FAILED!@#<username>;<username>;...;<username>
 
 Request game:
-C - GAME!@#<f-username>!@#<t-username>
-S-t - GAME!@#<f-username>!@#<t-username>
+C - GAMEREQ!@#<f-username>!@#<t-username>
+S-t - GAMEREQ!@#<f-username>!@#<t-username>
 S-f - WAIT (or) NOGAME
+
+Move piece:
+C - MOVE!@#<f-u>!@#<t-u>!@#<>

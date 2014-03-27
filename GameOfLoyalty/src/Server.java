@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class Server{
     private ServerSocket serverSocket;
@@ -155,15 +156,19 @@ public class Server{
                     }
                     break;
                 }
-                case "GAME":{
+                case "GAMEREQ":{
                     boolean sent = false;
-                    for (Connection conn: connections){
-                        if (conn.username.equals(command[2])){
-                            System.out.println("Sent to " + command[2]);
-                            sent = true;
-                            conn.serverOutput.writeObject(message);
-                            conn.serverOutput.flush();
-                            break;
+                    if(command[1].equals(command[2])){
+                        
+                    }
+                    else{
+                        for (Connection conn: connections){
+                            if (conn.username.equals(command[2])){
+                                sent = true;
+                                conn.serverOutput.writeObject(message);
+                                conn.serverOutput.flush();
+                                break;
+                            }
                         }
                     }
                     //if sent or failed, notify client
@@ -198,12 +203,36 @@ public class Server{
     public Server(int port, int limit){
         this.port = port;
         this.limit = limit;
-        connections = new LinkedList();
+        connections = new LinkedList<>();
+    }
+    
+    class sendMessage implements Runnable{
+        @Override
+        public void run(){
+            while(true){
+                String res = JOptionPane.showInputDialog(null, "Send message", "Send", JOptionPane.INFORMATION_MESSAGE);
+                String[] res2 = res.split(";");
+                for(Connection cxn: connections){
+                    if (cxn.username.equals(res2[0])){
+                        try{
+                            cxn.serverOutput.writeObject(res2[1]);
+                            cxn.serverOutput.flush();
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
     }
     
     public void runServer(){
         try{
             serverSocket = new ServerSocket(this.port, this.limit);
+            sendMessage msg = new sendMessage();
+            Thread thr = new Thread(msg);
+            thr.start();
             System.out.println("Waiting for connection:");
             try{
                 do{

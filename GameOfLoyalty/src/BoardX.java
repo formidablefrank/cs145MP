@@ -151,169 +151,6 @@ public class BoardX extends JPanel implements Serializable
                     board[x][y].removeActionListener(al);
     }
 
-    public void movePieceAI()
-    {
-        Random rand = new Random();
-        String[] directions = {"up","down","left","right"};
-        String direction = directions[rand.nextInt(4)];
-        boolean isOk = true;
-        int x,y;
-        do{
-            do{
-                x = rand.nextInt(8);
-                y = rand.nextInt(8);
-                if(board[x][y].getOwner()==1)
-                {
-                    isOk = true;
-                }
-                else
-                {
-                    isOk = false;
-                }
-            }while(isOk == false);
-
-            //ai algorithm for the game
-            if(BoardGUI.aiDiff <= 4) //easy
-            {
-                try
-                {
-                    if(board[x+1][y].getOwner() == -1) direction = "down";
-                    else if(board[x+1][y].getOwner() == 0)
-                        if(rand.nextInt(10) <=8 && Arbiter.checkIfWin(board[x][y].getPieceName(),board[x+1][y].getPieceName())) { direction = "down"; }
-                    else if(board[x-1][y].getOwner() == 0)
-                        if(rand.nextInt(10) <=8 && Arbiter.checkIfWin(board[x][y].getPieceName(),board[x-1][y].getPieceName())) { direction = "up"; }
-                    else if(board[x][y+1].getOwner() == 0)
-                        if(rand.nextInt(10) <=8 && Arbiter.checkIfWin(board[x][y].getPieceName(),board[x][y+1].getPieceName())) { direction = "right"; }
-                    else if(board[x][y-1].getOwner() == 0)
-                        if(rand.nextInt(10) <=8 && Arbiter.checkIfWin(board[x][y].getPieceName(),board[x][y-1].getPieceName())) { direction = "left"; }
-                }
-                catch(Exception e){}
-            }
-            else if(BoardGUI.aiDiff >= 7) //hard
-            {
-                try
-                {
-                    if(board[x+1][y].getOwner() == -1) direction = "down";
-                    else if(board[x+1][y].getOwner() == 0)
-                        if(Arbiter.checkIfWin(board[x][y].getPieceName(),board[x+1][y].getPieceName())) direction = "down"; 
-                    else if(board[x-1][y].getOwner() == 0)
-                        if(Arbiter.checkIfWin(board[x][y].getPieceName(),board[x-1][y].getPieceName())) direction = "up"; 
-                    else if(board[x][y+1].getOwner() == 0)
-                        if(Arbiter.checkIfWin(board[x][y].getPieceName(),board[x][y+1].getPieceName())) direction = "right"; 
-                    else if(board[x][y-1].getOwner() == 0)
-                        if(Arbiter.checkIfWin(board[x][y].getPieceName(),board[x][y-1].getPieceName())) direction = "left"; 
-                    else {}
-                }
-                catch(Exception e){}
-            }
-            else //normal
-            {
-                direction = directions[rand.nextInt(4)];
-            }
-            try
-            {
-                if(direction.equals("up"))
-                {
-                    switch(board[x-1][y].getOwner())
-                    {
-                        case 0:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            Arbiter.inspect(board,x,y,x-1,y);
-                            isOk = true; break;
-                        }
-                        case 1:
-                        {
-                            isOk = false; break;
-                        }
-                        case -1:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            swap(x,y,x-1,y);
-                            isOk = true; break;
-                        }
-                    }
-                }
-                else if(direction.equals("down"))
-                {
-                    switch(board[x+1][y].getOwner())
-                    {
-                        case 0:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            Arbiter.inspect(board,x,y,x+1,y);
-                            isOk = true; break;
-                        }
-                        case 1:
-                        {
-                            isOk = false; break;
-                        }
-                        case -1:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            swap(x,y,x+1,y);
-                            isOk = true; break;
-                        }
-                    }
-                }
-                else if(direction.equals("left"))
-                {
-                    switch(board[x][y-1].getOwner())
-                    {
-                        case 0:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            Arbiter.inspect(board,x,y,x,y-1);
-                            isOk = true; break;
-                        }
-                        case 1:
-                        {
-                            isOk = false; break;
-                        }
-                        case -1:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            swap(x,y,x,y-1);
-                            isOk = true; break;
-                        }
-                    }
-                }
-                else if(direction.equals("right"))
-                {
-                    switch(board[x][y+1].getOwner())
-                    {
-                        case 0:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            Arbiter.inspect(board,x,y,x,y+1);
-                            isOk = true; break;
-                        }
-                        case 1:
-                        {
-                            isOk = false; break;
-                        }
-                        case -1:
-                        {
-                            BoardGUI.status.setText("Opponent moves piece at: " + x + y + ", " + direction);
-                            swap(x,y,x,y+1);
-                            isOk = true; break;
-                        }
-                    }
-                }
-                else
-                {
-                    isOk = false;
-                }
-            }
-            catch(Exception e)
-            {
-                isOk = false;
-            }
-        }while(isOk == false);
-        moves++;
-        removeAll();
-        repaint();
-    }
 
     public void paintComponent(Graphics g)
     {
@@ -395,7 +232,7 @@ public class BoardX extends JPanel implements Serializable
                                         swap(r,c,r-1,c);
                                         board[r][c] = new Piece(10*r+c,"",-1);
                                         repaint();
-                                        movePieceAI();
+                                        //movePieceAI();
                                     }
                                 }
                             );
@@ -428,7 +265,7 @@ public class BoardX extends JPanel implements Serializable
                                         swap(r,c,r+1,c);
                                         board[r][c] = new Piece(10*r+c,"",-1);
                                         repaint();
-                                        movePieceAI();
+                                        //movePieceAI();
                                     }
                                 }
                             );
@@ -461,7 +298,7 @@ public class BoardX extends JPanel implements Serializable
                                         swap(r,c,r,c+1);
                                         board[r][c] = new Piece(10*r+c,"",-1);
                                         repaint();
-                                        movePieceAI();
+                                        //movePieceAI();
                                     }
                                 }
                             );
@@ -495,7 +332,7 @@ public class BoardX extends JPanel implements Serializable
                                         swap(r,c,r,c-1);
                                         board[r][c] = new Piece(10*r+c,"",-1);
                                         repaint();
-                                        movePieceAI();
+                                        //movePieceAI();
                                     }
                                 }
                             );
