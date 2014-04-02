@@ -7,13 +7,14 @@ public class BoardGUIX implements Serializable
 {
     public static JLabel status = new JLabel("Let's Play! Click the board to start playing.",SwingConstants.RIGHT);
     Frame frame = new Frame();
-    static BoardX guiX = new BoardX();
+    static BoardX guiX;
     static Settings set = new Settings();
     public static int aiDiff = 5;
     private JButton btn;
     
-    public void go(JButton btn)
+    public void go(JButton btn, ObjectInputStream x, ObjectOutputStream y)
     {
+        guiX = new BoardX(x, y);
         this.btn = btn;
         frame.setVisible(true);
     }

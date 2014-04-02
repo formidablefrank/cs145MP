@@ -1,19 +1,21 @@
 import java.awt.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.*;
 
 public class SplashScreenX implements java.io.Serializable
 {
     private Frame frame = new Frame();
     private Panel panel = new Panel();
-    BoardGUIX guiX = new BoardGUIX();
-    public void go(JButton btn)
+    BoardGUIX bguiX = new BoardGUIX();
+    public void go(JButton btn, ObjectInputStream x, ObjectOutputStream y)
     {
         frame.setVisible(true);
         frame.setContentPane(panel);
         try{Thread.sleep(2000);}
         catch(Exception ex){}
         frame.dispose();
-        guiX.go(btn);
+        bguiX.go(btn, x, y);
     }
     
     class Frame extends JFrame

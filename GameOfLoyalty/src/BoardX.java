@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 import java.io.*;
 
@@ -9,9 +8,18 @@ public class BoardX extends JPanel implements Serializable
     public static Piece[][] board = new Piece[8][8];
     public static int moves;
     static Piece temp = new Piece(-2,"",-1);
+    ObjectInputStream clientInput;
+    ObjectOutputStream clientOutput;
     
-    public BoardX()
+    public BoardX(ObjectInputStream a, ObjectOutputStream b)
     {
+        this.clientInput = a;
+        this.clientOutput = b;
+        /*try {
+           clientOutput.writeObject("MOVE!@#");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }*/
         this.initialize();
         for(int x=0;x<8;x++)
         {
@@ -22,6 +30,18 @@ public class BoardX extends JPanel implements Serializable
                 board[x][y].addActionListener(bListener);
             }
         }
+        try{
+        clientOutput.writeObject(board);}
+        catch(Exception e)
+        {}
+    }
+    
+    public void processMessage(String message){
+        String[] command = message.split("!@#");
+        int x = Integer.parseInt(command[3]);
+        int y = Integer.parseInt(command[4]);
+        this.swap(x/10,x%10,y/10,y%10);
+        this.repaint();
     }
     
     public void initialize()
@@ -63,19 +83,6 @@ public class BoardX extends JPanel implements Serializable
                 board[x][y] = new Piece(10*x+y,"W",1,new ImageIcon("source/opp.png"),new ImageIcon("source/oppr.png"));
             for(int y=7;y<8;y++)
                 board[x][y] = new Piece(10*x+y,"F",1,new ImageIcon("source/opp.png"),new ImageIcon("source/oppr.png"));
-        }
-
-        Random rand = new Random();
-        for(int x=0;x<128;x++)
-        {
-            int i = rand.nextInt(2);
-            int j = rand.nextInt(2);
-            int k = rand.nextInt(8);
-            int l = rand.nextInt(8);
-            int m = rand.nextInt(2)+6;
-            int n = rand.nextInt(2)+6;
-            swap(i,k,j,l);
-            swap(m,k,n,l);
         }
 
         BoardGUI.status.setText("Let's play!");

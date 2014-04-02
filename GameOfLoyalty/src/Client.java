@@ -152,13 +152,23 @@ public class Client{
             case "START":{
                 if(username.equals(command[1])){
                     splX = new SplashScreenX();
-                    splX.go(frame.tab.pp.btn2);
+                    splX.go(frame.tab.pp.btn2, clientInput, clientOutput);
                 }
                 else if (username.equals(command[2])){
                     splY = new SplashScreenY();
                     splY.go(frame.tab.pp.btn2);
                 }
                 break;
+            }
+            case "MOVE":
+            {
+                if(splX != null){
+                    splX.bguiX.guiX.processMessage(message);}
+                else if(splY != null){
+                    splY.bguiY.guiY.processMessage(message);}
+            }
+            default:{
+                System.out.println("YOLO");
             }
         }
     }

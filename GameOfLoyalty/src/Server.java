@@ -196,6 +196,14 @@ public class Server{
                     }
                     break;
                 }
+                case "MOVE":{
+                    for (Connection conn: connections){
+                        if(conn.username.equals(command[2])){
+                            conn.serverOutput.writeObject(message);
+                            conn.serverOutput.flush();
+                        }
+                    }
+                }
             }
         }
     }
