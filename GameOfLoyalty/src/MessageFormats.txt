@@ -22,4 +22,4 @@ S-t - GAMEREQ!@#<f-username>!@#<t-username>
 S-f - WAIT (or) NOGAME
 
 Move piece:
-C - MOVE!@#<f-u>!@#<t-u>!@#<>
+C - MOVE!@#<f-u>!@#<t-u>!@#<fromC>!@#<toC>
