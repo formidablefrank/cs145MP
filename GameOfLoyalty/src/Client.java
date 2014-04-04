@@ -165,10 +165,13 @@ public class Client{
                 if(splX != null){
                     splX.bguiX.guiX.processMessage(message);}
                 else if(splY != null){
-                    splY.bguiY.guiY.processMessage(message);}
+                    //splY.bguiY.guiY.processMessage(message);}
+                }
             }
+            
             default:{
                 System.out.println("YOLO");
+                break;
             }
         }
     }
