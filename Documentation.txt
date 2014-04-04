@@ -1,0 +1,44 @@
+CS145 ME2-4
+Frank Rayo, Tricia Esguerra, Mara Shen
+
+It satisfies all the services in the specifications.
+The program has two components: the chat application and the network game.
+There is only one server that is passing the messages from a client to another.
+A thread is run in the server to accept incoming connections while communication with online users.
+When a client requests a service, it sends a message to the server then the server updates all the relevant clients by also sending messages.
+When a server or client receives a message, it executes procedures depending on the message format.
+There is no status message (eg. 200, 404).
+
+Init connection:
+C to S - <username>
+S to all C - USER!@#<username>!@#is up
+
+Log-out:
+C to S - TERMINATE!@#<username>
+S to all C - TERMINATE!@#<username>
+
+Update status:
+C to S - STATUS!@#<username>!@#<message>
+S to all C - STATUS!@#<username>!@#<message>
+
+View online:
+C to S - LIST!@#<username>
+S to C - LIST!@#<username>\n<username>\n...
+
+Send message:
+C to S - SEND!@#<username>!@#<username>;<username>;...;<username>!@#<message>
+S to all recipients C - FAILED!@#<username>;<username>;...;<username>
+
+Request game:
+C to S- GAMEREQ!@#<from-username>!@#<to-username>
+S to C - GAMEREQ!@#<from-username>!@#<to-username>
+S to C who requested - WAIT (or) NOGAME
+
+Move piece: (not implemented)
+C to S - MOVE!@#<from-user>!@#<to-user>!@#<fromCoordinate>!@#<toCoordinate>
+
+How to run the application:
+You must have Java installed on your computer.
+Make sure you modify the hostname of the server in the 'ClientDriver.java'.
+On the folder GameOfLoyalty/src, compile all the codes using 'javac *.java' then for the server, run 'java ServerDriver'. For the client, run 'java ClientDriver'.
+If you want to play the game offline with AI, run 'java Main'.
